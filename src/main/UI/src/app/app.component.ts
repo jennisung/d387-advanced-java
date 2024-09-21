@@ -7,17 +7,21 @@ import {map} from "rxjs/operators";
 
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  //Added   messages: string[] = [];
+  messages: string[] = [];
+
 
   constructor(private httpClient:HttpClient){}
 
   private baseURL:string='http://localhost:8080';
+  //Added   private getMessagesUrl: string = this.baseURL + '/welcomeMessages';
+  private getMessagesUrl: string = this.baseURL + '/welcomeMessages';
 
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
@@ -44,6 +48,23 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+      // Added       this.getMessages();
+      this.getMessages();
+
+    }
+
+  getMessages() {
+    console.log("Get messages:", this.getMessagesUrl);
+
+    this.httpClient.get<string[]>(this.getMessagesUrl).subscribe(
+      (response) => {
+        console.log('Messages received:', response);
+        this.messages = response;
+      },
+      (error) => {
+        console.error('Cannot get messages:', error);
+      }
+    );
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
