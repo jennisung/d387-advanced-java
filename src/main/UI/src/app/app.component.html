@@ -93,7 +93,18 @@
       </div>
 
 
-<!--       Added below-->
+
+
+      <div>
+        <strong>Times:</strong>
+        <ul>
+          <li *ngFor="let time of times">{{ time}}</li>
+        </ul>
+      </div>
+
+
+
+      <!--       Added below-->
       <div *ngIf="messages.length > 0">
         <h3>Welcome to the hotel:</h3>
         <ul>
