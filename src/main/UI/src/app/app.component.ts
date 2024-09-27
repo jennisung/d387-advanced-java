@@ -4,7 +4,8 @@ import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
 
-
+// TASK C3
+// import {Location, LocationStrategy} from "@angular/common";
 
 
 @Component({
@@ -19,8 +20,12 @@ export class AppComponent implements OnInit{
 
 
   constructor(private httpClient:HttpClient){}
+  // constructor(private httpClient:HttpClient, private location:Location, private locationStrategy:LocationStrategy){}
+
 
   private baseURL:string='http://localhost:8080';
+
+
   //Added   private getMessagesUrl: string = this.baseURL + '/welcomeMessages';   private getTimeZonesUrl: string = this.baseURL + '/presentationTimes';
   private getMessagesUrl: string = this.baseURL + '/welcomeMessages';
   private getTimeZonesUrl: string = this.baseURL + '/presentationTimes';
