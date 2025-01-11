@@ -4,8 +4,8 @@ import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
 
-
-
+// TASK C3
+// import {Location, LocationStrategy} from "@angular/common";
 
 
 @Component({
@@ -14,10 +14,21 @@ import {map} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  //Added   messages: string[] = []; times: string[] = [];
+  messages: string[] = [];
+  times: string[] = [];
+
 
   constructor(private httpClient:HttpClient){}
+  // constructor(private httpClient:HttpClient, private location:Location, private locationStrategy:LocationStrategy){}
+
 
   private baseURL:string='http://localhost:8080';
+
+
+  //Added   private getMessagesUrl: string = this.baseURL + '/welcomeMessages';   private getTimeZonesUrl: string = this.baseURL + '/presentationTimes';
+  private getMessagesUrl: string = this.baseURL + '/welcomeMessages';
+  private getTimeZonesUrl: string = this.baseURL + '/presentationTimes';
 
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
@@ -44,6 +55,38 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+      // Added       this.getMessages();    this.getPresentationTimes();
+      this.getMessages();
+      this.getPresentationTimes();
+    }
+
+  getMessages() {
+    console.log("Get messages:", this.getMessagesUrl);
+
+    this.httpClient.get<string[]>(this.getMessagesUrl).subscribe(
+      (response) => {
+        console.log('Messages received:', response);
+        this.messages = response;
+      },
+      (error) => {
+        console.error('Cannot get messages:', error);
+      }
+    );
+  }
+
+
+
+  getPresentationTimes() {
+    console.log("Times:", this.getTimeZonesUrl);
+
+    this.httpClient.get<string>(this.getTimeZonesUrl, { responseType: 'text' as 'json' }).subscribe(
+      (response: string) => {
+        this.times = response.split(', ');
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){

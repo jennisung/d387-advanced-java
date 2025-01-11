@@ -23,10 +23,10 @@
   <div class="scene" id="welcome">
     <article class="content">
 
- 
+
 
       <div class="row">
-        <div class=""col-12>
+        <div class="col-12">
           <div class="gallery">
             <img src="assets/images/intro_room.jpg" alt="Intro Gallery Room Sample Pictures">
             <img src="assets/images/intro_pool.jpg" alt="Intro Gallery Pool Sample Pictures">
@@ -58,7 +58,7 @@
               </div>
               </form>
 
-        
+
         </div>
       </div>
 
@@ -75,7 +75,12 @@
                 </td>
                 <td>
                   <strong>Room #: {{room.roomNumber}}</strong><br/>
-                  <strong>Price: ${{room.price}}</strong>
+<!--                  <strong>Price: ${{room.price}}</strong>-->
+                  <strong>Price:</strong>
+
+                  <strong>USD: {{room.price | currency:'USD'}} </strong>
+                  <strong>CAD: {{room.price | currency:'CAD'}} </strong>
+                  <strong>EUR: {{ room.price | currency:'EUR'}} </strong>
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>
@@ -86,6 +91,31 @@
           </div>
         </div>
       </div>
+
+
+
+
+      <div>
+        <strong>Times:</strong>
+        <ul>
+          <li *ngFor="let time of times">{{ time}}</li>
+        </ul>
+      </div>
+
+
+
+      <!--       Added below-->
+      <div *ngIf="messages.length > 0">
+        <h3>Welcome to the hotel:</h3>
+        <ul>
+          <li *ngFor="let message of messages">
+            {{ message }}
+          </li>
+        </ul>
+      </div>
+
+
+
     </article>
   </div><!-- welcome -->
   <div class="scene" id="hotelinfo">
